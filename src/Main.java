@@ -19,12 +19,8 @@ public class Main {
         peoplelist.add(new people("123", "123", 100));
         peoplelist.add(new people("111", "111", 200));
 
-        people a = new people();
-        a = (people) peoplelist.get(2);
-        System.out.println(a.name + a.password);
 
-
-        Login_UI loginUi = new Login_UI(frame, peoplelist);
+        new Login_UI(frame, peoplelist);
         //select_UI selectUi = new select_UI(frame);
     }
 }
@@ -35,9 +31,9 @@ class Login_UI {
     JPanel panel = new JPanel();
     JLabel tittle = new JLabel("欢迎来到州哥银行");
     JLabel LabelUser = new JLabel("账户");
-    JTextField TextfiledAccount = new JTextField("123", 20);
+    JTextField TextfiledAccount = new JTextField(20);
     JLabel LabelPassword = new JLabel("密码");
-    JPasswordField PasswordfieldPassword = new JPasswordField("123", 20);
+    JPasswordField PasswordfieldPassword = new JPasswordField(20);
     JButton ButtonLogin = new JButton("登录");
 
     JButton AddAccount = new JButton("注册");
@@ -45,9 +41,9 @@ class Login_UI {
     Login_UI(JFrame frame, ArrayList<people> peoplelist) {
 
 
-        Font FontTittle = new Font("黑体", 1, 32);
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontTittle = new Font("黑体", Font.BOLD, 32);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -92,13 +88,11 @@ class Login_UI {
                 password = PasswordfieldPassword.getText();
                 LoginCheck loginCheck = new LoginCheck(name, password);
                 if (loginCheck.check(frame, peoplelist)) {
-                    System.out.println("Y");
                     int peoplenumber = loginCheck.getpeoplenumber(peoplelist);
                     //关闭上个一panel
                     panel.setVisible(false);
-                    select_UI selectUi = new select_UI(frame, peoplelist, peoplenumber);
+                    new select_UI(frame, peoplelist, peoplenumber);
                 } else {
-                    System.out.println("N");
                     System.out.println(name + password);
                 }
             }
@@ -135,9 +129,9 @@ class AddAccunt_UI {
     AddAccunt_UI(JFrame frame, ArrayList<people> peoplelist) {
 
 
-        Font FontTittle = new Font("黑体", 1, 32);
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontTittle = new Font("黑体", Font.BOLD, 32);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -209,7 +203,7 @@ class select_UI {
     JButton back = new JButton("返回");
 
     select_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
         frame.add(panel);
         panel.setLayout(null);
@@ -287,8 +281,8 @@ class SaveMoney_UI {
     JButton back = new JButton("返回");
 
     SaveMoney_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -344,8 +338,8 @@ class WithDrawal_UI {
     JButton back = new JButton("返回");
 
     WithDrawal_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -402,8 +396,8 @@ class TurnMoney_UI {
     JButton back = new JButton("返回");
 
     TurnMoney_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -463,8 +457,8 @@ class Raming_UI {
     JButton back = new JButton("返回");
 
     Raming_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
-        Font FontLogin = new Font("黑体", 0, 18);
-        Font FontButton = new Font("黑体", 0, 14);
+        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
         frame.add(panel);
@@ -577,14 +571,14 @@ class people {
     }
 
     void transfers(JFrame frame, ArrayList<people> peoplelist, int peoplenumber, String othername, double money) {
-        for (int i = 0; i < peoplelist.size(); i++) {
-            if (peoplelist.get(i).name.equals(othername)) {
+        for (people people : peoplelist) {
+            if (people.name.equals(othername)) {
                 if (peoplelist.get(peoplenumber).money < money) {
                     new floatwindow(frame, "余额不足");
                     return;
                 } else {
                     peoplelist.get(peoplenumber).money -= money;
-                    peoplelist.get(i).money += money;
+                    people.money += money;
                     new floatwindow(frame, "转账完成");
                     return;
                 }
@@ -599,9 +593,6 @@ class people {
 
 //弹窗类，用于提示操作结果
 class floatwindow {
-    floatwindow(String massage) {
-        JOptionPane.showMessageDialog(null, massage);
-    }
 
     floatwindow(JFrame frame, String massage) {
         JOptionPane.showMessageDialog(frame, massage);

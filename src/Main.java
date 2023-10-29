@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main {
@@ -13,23 +12,19 @@ public class Main {
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        people[] peopleList = {
-                new people("123", "123", 100),
-                new people("111", "111", 200)
-        };
 
-        List peo = new ArrayList<>();
-        peo.add(new people("1", "1", 0));
-        peo.add(new people("2", "1", 0));
-        peo.add(new people("123", "123", 100));
-        peo.add(new people("111", "111", 200));
+        ArrayList<people> peoplelist = new ArrayList<>();
+        peoplelist.add(new people("1", "1", 0));
+        peoplelist.add(new people("2", "1", 0));
+        peoplelist.add(new people("123", "123", 100));
+        peoplelist.add(new people("111", "111", 200));
 
         people a = new people();
-        a = (people) peo.get(2);
+        a = (people) peoplelist.get(2);
         System.out.println(a.name + a.password);
 
 
-        Login_UI loginUi = new Login_UI(frame, peopleList);
+        Login_UI loginUi = new Login_UI(frame, peoplelist);
         //select_UI selectUi = new select_UI(frame);
     }
 }
@@ -47,7 +42,7 @@ class Login_UI {
 
     JButton AddAccount = new JButton("注册");
 
-    Login_UI(JFrame frame, people[] peoplelist) {
+    Login_UI(JFrame frame, ArrayList<people> peoplelist) {
 
 
         Font FontTittle = new Font("黑体", 1, 32);
@@ -137,7 +132,7 @@ class AddAccunt_UI {
     JButton back = new JButton("返回");
 
 
-    AddAccunt_UI(JFrame frame, people[] peoplelist) {
+    AddAccunt_UI(JFrame frame, ArrayList<people> peoplelist) {
 
 
         Font FontTittle = new Font("黑体", 1, 32);
@@ -213,7 +208,7 @@ class select_UI {
     JButton button4 = new JButton("余额");
     JButton back = new JButton("返回");
 
-    select_UI(JFrame frame, people[] peoplelist, int peoplenumber) {
+    select_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontButton = new Font("黑体", 0, 14);
 
         frame.add(panel);
@@ -291,7 +286,7 @@ class SaveMoney_UI {
     JButton button = new JButton("确认");
     JButton back = new JButton("返回");
 
-    SaveMoney_UI(JFrame frame, people[] peoplelist, int peoplenumber) {
+    SaveMoney_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontLogin = new Font("黑体", 0, 18);
         Font FontButton = new Font("黑体", 0, 14);
 
@@ -348,7 +343,7 @@ class WithDrawal_UI {
     JButton button = new JButton("确认");
     JButton back = new JButton("返回");
 
-    WithDrawal_UI(JFrame frame, people[] peoplelist, int peoplenumber) {
+    WithDrawal_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontLogin = new Font("黑体", 0, 18);
         Font FontButton = new Font("黑体", 0, 14);
 
@@ -406,7 +401,7 @@ class TurnMoney_UI {
     JButton button = new JButton("确认");
     JButton back = new JButton("返回");
 
-    TurnMoney_UI(JFrame frame, people[] peoplelist, int peoplenumber) {
+    TurnMoney_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontLogin = new Font("黑体", 0, 18);
         Font FontButton = new Font("黑体", 0, 14);
 
@@ -467,7 +462,7 @@ class Raming_UI {
     JTextField textField2 = new JTextField();
     JButton back = new JButton("返回");
 
-    Raming_UI(JFrame frame, people[] peoplelist, int peoplenumber) {
+    Raming_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontLogin = new Font("黑体", 0, 18);
         Font FontButton = new Font("黑体", 0, 14);
 
@@ -476,8 +471,8 @@ class Raming_UI {
         panel.setLayout(null);
 
 
-        textField1.setText(peoplelist[peoplenumber].name);
-        textField2.setText(String.valueOf(peoplelist[peoplenumber].money));
+        textField1.setText(peoplelist.get(peoplenumber).name);
+        textField2.setText(String.valueOf(peoplelist.get(peoplenumber).money));
 
         turntoname.setFont(FontLogin);
         turntoname.setBounds(140, 120, 80, 20);
@@ -519,7 +514,7 @@ class LoginCheck {
         this.password = password;
     }
 
-    boolean check(JFrame frame, people[] peoplelist) {
+    boolean check(JFrame frame, ArrayList<people> peoplelist) {
         for (people people : peoplelist) {
             if (people.name.equals(name))
                 if (people.password.equals(password))
@@ -529,9 +524,9 @@ class LoginCheck {
         return false;
     }
 
-    int getpeoplenumber(people[] peoplelist) {
-        for (int i = 0; i < peoplelist.length; i++) {
-            if (peoplelist[i].name.equals(name))
+    int getpeoplenumber(ArrayList<people> peoplelist) {
+        for (int i = 0; i < peoplelist.size(); i++) {
+            if (peoplelist.get(i).name.equals(name))
                 return i;
         }
         return -1;
@@ -555,42 +550,41 @@ class people {
         this.money = money;
     }
 
-    void addaccount(JFrame frame, people[] peoplelist, String name, String password) {
+    void addaccount(JFrame frame, ArrayList<people> peoplelist, String name, String password) {
         for (people people : peoplelist) {
             if (people.name.equals(name)) {
                 new floatwindow(frame, "账户已被占用");
                 return;
-            } else {
-
             }
         }
-
+        peoplelist.add(new people(name, password, 0));
+        new floatwindow(frame, "账户创建成功");
 
     }
 
-    void deposit(JFrame frame, people[] peoplelist, int peoplenumber, double money) {
-        peoplelist[peoplenumber].money += money;
+    void deposit(JFrame frame, ArrayList<people> peoplelist, int peoplenumber, double money) {
+        peoplelist.get(peoplenumber).money += money;
         new floatwindow(frame, "存款成功");
     }
 
-    void withdrawal(JFrame frame, people[] peoplelist, int peoplenumber, double money) {
-        if (peoplelist[peoplenumber].money < money) {
+    void withdrawal(JFrame frame, ArrayList<people> peoplelist, int peoplenumber, double money) {
+        if (peoplelist.get(peoplenumber).money < money) {
             new floatwindow(frame, "余额不足");
         } else {
-            peoplelist[peoplenumber].money -= money;
+            peoplelist.get(peoplenumber).money -= money;
             new floatwindow(frame, "取款成功");
         }
     }
 
-    void transfers(JFrame frame, people[] peoplelist, int peoplenumber, String othername, double money) {
-        for (int i = 0; i < peoplelist.length; i++) {
-            if (peoplelist[i].name.equals(othername)) {
-                if (peoplelist[peoplenumber].money < money) {
+    void transfers(JFrame frame, ArrayList<people> peoplelist, int peoplenumber, String othername, double money) {
+        for (int i = 0; i < peoplelist.size(); i++) {
+            if (peoplelist.get(i).name.equals(othername)) {
+                if (peoplelist.get(peoplenumber).money < money) {
                     new floatwindow(frame, "余额不足");
                     return;
                 } else {
-                    peoplelist[peoplenumber].money -= money;
-                    peoplelist[i].money += money;
+                    peoplelist.get(peoplenumber).money -= money;
+                    peoplelist.get(i).money += money;
                     new floatwindow(frame, "转账完成");
                     return;
                 }

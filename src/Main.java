@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
@@ -79,31 +77,25 @@ class Login_UI {
         AddAccount.setBounds(300, 200, 80, 30);
         panel.add(AddAccount);
 
-        ButtonLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name;
-                String password;
-                name = TextfiledAccount.getText();
-                password = PasswordfieldPassword.getText();
-                LoginCheck loginCheck = new LoginCheck(name, password);
-                if (loginCheck.check(frame, peoplelist)) {
-                    int peoplenumber = loginCheck.getpeoplenumber(peoplelist);
-                    //关闭上个一panel
-                    panel.setVisible(false);
-                    new select_UI(frame, peoplelist, peoplenumber);
-                } else {
-                    System.out.println(name + password);
-                }
+        ButtonLogin.addActionListener(e -> {
+            String name;
+            String password;
+            name = TextfiledAccount.getText();
+            password = PasswordfieldPassword.getText();
+            LoginCheck loginCheck = new LoginCheck(name, password);
+            if (loginCheck.check(frame, peoplelist)) {
+                int peoplenumber = loginCheck.getpeoplenumber(peoplelist);
+                //关闭上个一panel
+                panel.setVisible(false);
+                new select_UI(frame, peoplelist, peoplenumber);
+            } else {
+                System.out.println(name + password);
             }
         });
         //注册按钮，调用people.addaccount
-        AddAccount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new AddAccunt_UI(frame, peoplelist);
-            }
+        AddAccount.addActionListener(e -> {
+            panel.setVisible(false);
+            new AddAccunt_UI(frame, peoplelist);
         });
 
         //设置可见
@@ -170,19 +162,11 @@ class AddAccunt_UI {
 
 
         //注册按钮，调用people.addaccount
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new people().addaccount(frame, peoplelist, textField1.getText(), passwordField.getText());
-            }
-        });
+        button.addActionListener(e -> new people().addaccount(frame, peoplelist, textField1.getText(), passwordField.getText()));
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new Login_UI(frame, peoplelist);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new Login_UI(frame, peoplelist);
         });
 
 
@@ -228,45 +212,30 @@ class select_UI {
         back.setBounds(460, 260, 80, 50);
         panel.add(back);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new SaveMoney_UI(frame, peoplelist, peoplenumber);
-            }
+        button1.addActionListener(e -> {
+            panel.setVisible(false);
+            new SaveMoney_UI(frame, peoplelist, peoplenumber);
         });
 
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new WithDrawal_UI(frame, peoplelist, peoplenumber);
-            }
+        button2.addActionListener(e -> {
+            panel.setVisible(false);
+            new WithDrawal_UI(frame, peoplelist, peoplenumber);
         });
 
 
-        button3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new TurnMoney_UI(frame, peoplelist, peoplenumber);
-            }
+        button3.addActionListener(e -> {
+            panel.setVisible(false);
+            new TurnMoney_UI(frame, peoplelist, peoplenumber);
         });
 
-        button4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new Raming_UI(frame, peoplelist, peoplenumber);
-            }
+        button4.addActionListener(e -> {
+            panel.setVisible(false);
+            new Raming_UI(frame, peoplelist, peoplenumber);
         });
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new Login_UI(frame, peoplelist);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new Login_UI(frame, peoplelist);
         });
 
     }
@@ -303,27 +272,21 @@ class SaveMoney_UI {
         back.setBounds(460, 260, 80, 50);
         panel.add(back);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new people().deposit(frame, peoplelist, peoplenumber, Double.parseDouble(textField1.getText()));
-                    textField1.setText("");
+        button.addActionListener(e -> {
+            try {
+                new people().deposit(frame, peoplelist, peoplenumber, Double.parseDouble(textField1.getText()));
+                textField1.setText("");
 
-                } catch (Exception NumberFormatException) {
-                    textField1.setText("");
-                    new floatwindow(frame, "存款失败");
-                }
-
+            } catch (Exception NumberFormatException) {
+                textField1.setText("");
+                new floatwindow(frame, "存款失败");
             }
+
         });
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new select_UI(frame, peoplelist, peoplenumber);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new select_UI(frame, peoplelist, peoplenumber);
         });
 
     }
@@ -360,26 +323,20 @@ class WithDrawal_UI {
         back.setBounds(460, 260, 80, 50);
         panel.add(back);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new people().withdrawal(frame, peoplelist, peoplenumber, Double.parseDouble(textField1.getText()));
-                    textField1.setText("");
-                } catch (Exception NumberFormatException) {
-                    textField1.setText("");
-                    new floatwindow(frame, "取款失败");
-                }
-
+        button.addActionListener(e -> {
+            try {
+                new people().withdrawal(frame, peoplelist, peoplenumber, Double.parseDouble(textField1.getText()));
+                textField1.setText("");
+            } catch (Exception NumberFormatException) {
+                textField1.setText("");
+                new floatwindow(frame, "取款失败");
             }
+
         });
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new select_UI(frame, peoplelist, peoplenumber);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new select_UI(frame, peoplelist, peoplenumber);
         });
 
     }
@@ -425,22 +382,16 @@ class TurnMoney_UI {
         back.setBounds(460, 260, 80, 50);
         panel.add(back);
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new select_UI(frame, peoplelist, peoplenumber);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new select_UI(frame, peoplelist, peoplenumber);
         });
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    new people().transfers(frame, peoplelist, peoplenumber, textField1.getText(), Double.parseDouble(textField2.getText()));
-                } catch (Exception NumberFormatException) {
-                    new floatwindow(frame, "转账失败");
-                }
+        button.addActionListener(e -> {
+            try {
+                new people().transfers(frame, peoplelist, peoplenumber, textField1.getText(), Double.parseDouble(textField2.getText()));
+            } catch (Exception NumberFormatException) {
+                new floatwindow(frame, "转账失败");
             }
         });
     }
@@ -486,12 +437,9 @@ class Raming_UI {
         back.setBounds(460, 260, 80, 50);
         panel.add(back);
 
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                new select_UI(frame, peoplelist, peoplenumber);
-            }
+        back.addActionListener(e -> {
+            panel.setVisible(false);
+            new select_UI(frame, peoplelist, peoplenumber);
         });
 
     }

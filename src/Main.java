@@ -5,19 +5,19 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        //主frame
+        //主frame，frame下应用各层panel
         JFrame frame = new JFrame("州哥银行");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+        //测试用账户数据
         ArrayList<people> peoplelist = new ArrayList<>();
         peoplelist.add(new people("1", "1", 0));
         peoplelist.add(new people("2", "1", 0));
         peoplelist.add(new people("123", "123", 100));
         peoplelist.add(new people("111", "111", 200));
 
-
+        //调用登录界面
         new Login_UI(frame, peoplelist);
         //select_UI selectUi = new select_UI(frame);
     }
@@ -25,75 +25,71 @@ public class Main {
 
 
 class Login_UI {
-
     JPanel panel = new JPanel();
     JLabel tittle = new JLabel("欢迎来到州哥银行");
-    JLabel LabelUser = new JLabel("账户");
-    JTextField TextfiledAccount = new JTextField(20);
-    JLabel LabelPassword = new JLabel("密码");
-    JPasswordField PasswordfieldPassword = new JPasswordField(20);
+    JLabel label = new JLabel("账户");
+    JTextField textField = new JTextField(20);
+    JLabel label2 = new JLabel("密码");
+    JPasswordField passwordField = new JPasswordField(20);
     JButton ButtonLogin = new JButton("登录");
-
-    JButton AddAccount = new JButton("注册");
+    JButton ButtonAddAccount = new JButton("注册");
 
     Login_UI(JFrame frame, ArrayList<people> peoplelist) {
 
-
+        //字体
         Font FontTittle = new Font("黑体", Font.BOLD, 32);
-        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontText = new Font("黑体", Font.PLAIN, 18);
         Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
+        //向主frame中加入当前panel
+        //panel中加入组件
         frame.add(panel);
         panel.setLayout(null);
-
 
         tittle.setFont(FontTittle);
         tittle.setBounds(170, 30, 400, 100);
         panel.add(tittle);
 
+        label.setFont(FontText);
+        label.setBounds(140, 120, 50, 20);
+        panel.add(label);
 
-        LabelUser.setFont(FontLogin);
-        LabelUser.setBounds(140, 120, 50, 20);
-        panel.add(LabelUser);
+        textField.setBounds(200, 115, 200, 30);
+        panel.add(textField);
 
+        label2.setFont(FontText);
+        label2.setBounds(140, 160, 50, 20);
+        panel.add(label2);
 
-        TextfiledAccount.setBounds(200, 115, 200, 30);
-        panel.add(TextfiledAccount);
-
-
-        LabelPassword.setFont(FontLogin);
-        LabelPassword.setBounds(140, 160, 50, 20);
-        panel.add(LabelPassword);
-
-        PasswordfieldPassword.setBounds(200, 155, 200, 30);
-        panel.add(PasswordfieldPassword);
+        passwordField.setBounds(200, 155, 200, 30);
+        panel.add(passwordField);
 
         ButtonLogin.setFont(FontButton);
         ButtonLogin.setBounds(180, 200, 80, 30);
         panel.add(ButtonLogin);
 
-        AddAccount.setFont(FontButton);
-        AddAccount.setBounds(300, 200, 80, 30);
-        panel.add(AddAccount);
+        ButtonAddAccount.setFont(FontButton);
+        ButtonAddAccount.setBounds(300, 200, 80, 30);
+        panel.add(ButtonAddAccount);
 
+
+        //登录按钮事件
         ButtonLogin.addActionListener(e -> {
             String name;
             String password;
-            name = TextfiledAccount.getText();
-            password = PasswordfieldPassword.getText();
-            LoginCheck loginCheck = new LoginCheck(name, password);
+            name = textField.getText();
+            password = passwordField.getText();
+            people loginCheck = new people(name, password);
             if (loginCheck.check(frame, peoplelist)) {
                 int peoplenumber = loginCheck.getpeoplenumber(peoplelist);
                 //关闭上个一panel
                 panel.setVisible(false);
                 new select_UI(frame, peoplelist, peoplenumber);
-            } else {
-                System.out.println(name + password);
             }
         });
         //注册按钮，调用people.addaccount
-        AddAccount.addActionListener(e -> {
+        ButtonAddAccount.addActionListener(e -> {
             panel.setVisible(false);
             new AddAccunt_UI(frame, peoplelist);
         });
@@ -107,7 +103,6 @@ class Login_UI {
 
 
 class AddAccunt_UI {
-
     JPanel panel = new JPanel();
     JLabel tittle = new JLabel("欢迎来到州哥银行");
     JLabel jLabel1 = new JLabel("注册账户");
@@ -122,7 +117,7 @@ class AddAccunt_UI {
 
 
         Font FontTittle = new Font("黑体", Font.BOLD, 32);
-        Font FontLogin = new Font("黑体", Font.PLAIN, 18);
+        Font FontTxt = new Font("黑体", Font.PLAIN, 18);
         Font FontButton = new Font("黑体", Font.PLAIN, 14);
 
 
@@ -135,7 +130,7 @@ class AddAccunt_UI {
         panel.add(tittle);
 
 
-        jLabel1.setFont(FontLogin);
+        jLabel1.setFont(FontTxt);
         jLabel1.setBounds(140, 120, 50, 20);
         panel.add(jLabel1);
 
@@ -144,7 +139,7 @@ class AddAccunt_UI {
         panel.add(textField1);
 
 
-        label2.setFont(FontLogin);
+        label2.setFont(FontTxt);
         label2.setBounds(140, 160, 50, 20);
         panel.add(label2);
 
@@ -180,6 +175,8 @@ class AddAccunt_UI {
 
 class select_UI {
     JPanel panel = new JPanel();
+    JLabel label = new JLabel("oh S**T Man");
+    JLabel label1 = new JLabel("今天想整点啥");
     JButton button1 = new JButton("存款");
     JButton button2 = new JButton("取款");
     JButton button3 = new JButton("转账");
@@ -188,9 +185,18 @@ class select_UI {
 
     select_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
         Font FontButton = new Font("黑体", Font.PLAIN, 14);
+        Font FontTxt = new Font("黑体", Font.PLAIN, 18);
 
         frame.add(panel);
         panel.setLayout(null);
+
+        label.setFont(FontTxt);
+        label.setBounds(200, 20, 200, 50);
+        panel.add(label);
+
+        label1.setFont(FontTxt);
+        label1.setBounds(200, 80, 200, 50);
+        panel.add(label1);
 
         button1.setFont(FontButton);
         button1.setBounds(20, 20, 80, 50);
@@ -446,6 +452,7 @@ class Raming_UI {
 
 }
 
+/*
 
 class LoginCheck {
     String name;
@@ -475,6 +482,7 @@ class LoginCheck {
     }
 
 }
+*/
 
 
 class people {
@@ -486,10 +494,33 @@ class people {
 
     }
 
+    people(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     people(String name, String password, double money) {
         this.name = name;
         this.password = password;
         this.money = money;
+    }
+
+    boolean check(JFrame frame, ArrayList<people> peoplelist) {
+        for (people people : peoplelist) {
+            if (people.name.equals(name))
+                if (people.password.equals(password))
+                    return true;
+        }
+        new floatwindow(frame, "未找到账户或密码不正确");
+        return false;
+    }
+
+    int getpeoplenumber(ArrayList<people> peoplelist) {
+        for (int i = 0; i < peoplelist.size(); i++) {
+            if (peoplelist.get(i).name.equals(name))
+                return i;
+        }
+        return -1;
     }
 
     void addaccount(JFrame frame, ArrayList<people> peoplelist, String name, String password) {
@@ -523,13 +554,12 @@ class people {
             if (people.name.equals(othername)) {
                 if (peoplelist.get(peoplenumber).money < money) {
                     new floatwindow(frame, "余额不足");
-                    return;
                 } else {
                     peoplelist.get(peoplenumber).money -= money;
                     people.money += money;
                     new floatwindow(frame, "转账完成");
-                    return;
                 }
+                return;
             }
         }
         new floatwindow(frame, "未找到账户");
@@ -541,7 +571,6 @@ class people {
 
 //弹窗类，用于提示操作结果
 class floatwindow {
-
     floatwindow(JFrame frame, String massage) {
         JOptionPane.showMessageDialog(frame, massage);
     }

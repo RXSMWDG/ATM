@@ -92,6 +92,7 @@ class Login_UI {
         ButtonAddAccount.addActionListener(e -> {
             panel.setVisible(false);
             new AddAccunt_UI(frame, peoplelist);
+
         });
 
         //设置可见
@@ -175,7 +176,7 @@ class AddAccunt_UI {
 
 class select_UI {
     JPanel panel = new JPanel();
-    JLabel label = new JLabel("oh S**T Man");
+    JLabel label = new JLabel("葫芦岛州哥银行");
     JLabel label1 = new JLabel("今天想整点啥");
     JButton button1 = new JButton("存款");
     JButton button2 = new JButton("取款");
@@ -184,18 +185,19 @@ class select_UI {
     JButton back = new JButton("返回");
 
     select_UI(JFrame frame, ArrayList<people> peoplelist, int peoplenumber) {
+        Font FontTittle = new Font("黑体", Font.BOLD, 32);
         Font FontButton = new Font("黑体", Font.PLAIN, 14);
         Font FontTxt = new Font("黑体", Font.PLAIN, 18);
 
         frame.add(panel);
         panel.setLayout(null);
 
-        label.setFont(FontTxt);
-        label.setBounds(200, 20, 200, 50);
+        label.setFont(FontTittle);
+        label.setBounds(200, 20, 300, 50);
         panel.add(label);
 
-        label1.setFont(FontTxt);
-        label1.setBounds(200, 80, 200, 50);
+        label1.setFont(FontTittle);
+        label1.setBounds(210, 60, 200, 50);
         panel.add(label1);
 
         button1.setFont(FontButton);
